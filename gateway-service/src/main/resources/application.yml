@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: service-order
+          uri: lb://SERVICE-ORDER
+          predicates:
+            - Path=/api/order/**
+          filters:
+            #去掉前缀的个数
+            - StripPrefix=1
+        - id: service-user
+          uri: lb://SERVICE-USER
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - StripPrefix=1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8200
